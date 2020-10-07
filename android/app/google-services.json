@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "522079731371",
+    "firebase_url": "https://agrozon-7d928.firebaseio.com",
+    "project_id": "agrozon-7d928",
+    "storage_bucket": "agrozon-7d928.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:522079731371:android:07ec454ebb910b9de641ee",
+        "android_client_info": {
+          "package_name": "com.example.miniprojectapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "522079731371-lco7s2ic1vho0ei23mkm7dtg5ghu5p05.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.miniprojectapp",
+            "certificate_hash": "c6e377fcb753ee2b6cfb9350aca528cbf9bfc5e9"
+          }
+        },
+        {
+          "client_id": "522079731371-uk2bskvjqc50hfggagpfe71aa34nmo4b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAxdbJt5D-0Tv-wyONlFAwjw-y3eOUtKf4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "522079731371-uk2bskvjqc50hfggagpfe71aa34nmo4b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
