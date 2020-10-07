@@ -1,14 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+import 'package:miniprojectapp/OtpAuth.dart';
+import 'Data.dart';
+Data user=new Data();
 class LoginScreen extends StatefulWidget {
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
- bool _visible = false;
- bool _regvisible=true;
+ final _inputController = TextEditingController();
+var _formKey = GlobalKey<FormState>();
 
  Widget _buildHeading(){
   return Row(
@@ -19,181 +21,64 @@ class _LoginScreenState extends State<LoginScreen> {
    );
  }
  Widget _buildLoginform(){
-   return Visibility(
-     visible: _regvisible,
-     child: SingleChildScrollView(
+   return SingleChildScrollView(
+     padding: EdgeInsets.all(15),
+     child: Container(
        padding: EdgeInsets.all(15),
-       child: Container(
-         padding: EdgeInsets.all(15),
-         decoration: BoxDecoration(
-           borderRadius: BorderRadius.circular(15.0),
-           color: Colors.white,
-         ),
-         child: Column(
-           mainAxisAlignment: MainAxisAlignment.center,
-           children: [
-             Text("Login", style: TextStyle(color:Colors.green,fontSize: 20,fontWeight: FontWeight.bold),),
-             SizedBox(height: 20,),
-             TextField(
-               textInputAction: TextInputAction.next,
+       decoration: BoxDecoration(
+         borderRadius: BorderRadius.circular(15.0),
+         color: Colors.white,
+       ),
+       child: Column(
+         mainAxisAlignment: MainAxisAlignment.center,
+         children: [
+           Text("Verify your phone number", style: TextStyle(color:Colors.green,fontSize: 20,fontWeight: FontWeight.bold),),
+           SizedBox(height: 40,),
+           Text("Agrozon will send an SMS message to verify your phone number, Enter your 10 digit phone number",
+             style: TextStyle(color:Colors.green,fontSize: 15,fontWeight: FontWeight.bold,),
+             textAlign: TextAlign.center,
+           ),
+           SizedBox(height: 40,),
+           Form(
+             key: _formKey,
+             child: TextFormField(
+               controller:_inputController ,
+               textInputAction: TextInputAction.done,
                maxLength: 10,
+               maxLengthEnforced: true,
+               validator: (String arg) {
+                 if(arg.length <10)
+                   return "Please Enter 10 digit number";
+               },
                decoration: InputDecoration(
                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(30)),
                  prefixIcon: Icon(Icons.call),
-                 prefixText: "+91",
+                 prefixText: "+91 ",
                  labelText: "Mobile No.",
                  counterText: "",
                  labelStyle: TextStyle(fontSize: 18),
                  floatingLabelBehavior: FloatingLabelBehavior.auto,
                ),
-
-               keyboardType: TextInputType.number,
+               keyboardType: TextInputType.phone,
              ),
-             SizedBox(height: 20),
-             TextField(
-               maxLength: 8,
-               textInputAction: TextInputAction.done,
-               obscureText: !this._visible,
-               decoration: InputDecoration(
-                 border: OutlineInputBorder(borderRadius: BorderRadius.circular(30)),
-                 prefixIcon: Icon(Icons.lock),labelText: "Password",
-                 labelStyle: TextStyle(fontSize: 18),
-                 counterText: "",
-                 suffixIcon: IconButton(icon:this._visible ? Icon(Icons.visibility_off): Icon(Icons.visibility),
-                   color: this._visible ? Colors.red : Colors.green,
-                   onPressed: (){
-                     setState(() {
-                       this._visible = !this._visible;
-                     });
-                   },),
-               ),
-               maxLengthEnforced: true,
-             ),
-             TextButton(onPressed: (){}, child: Text("Forgot Password?")),
-             RaisedButton(onPressed:(){},
-               color: Colors.green,
-               padding: EdgeInsets.symmetric(horizontal: 60),
-               child: Text("Login", style: TextStyle(fontSize: 20,color: Colors.white),),
-               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-
-             ),
-           ],
-         ),
-       ),
-     ),
-   );
- }
- Widget _buildRegisterform(){
-   return Visibility(
-     visible: !_regvisible,
-     child: SingleChildScrollView(
-       padding: EdgeInsets.all(15),
-       child: Container(
-         padding: EdgeInsets.all(15),
-         decoration: BoxDecoration(
-           borderRadius: BorderRadius.circular(15.0),
-           color: Colors.white,
-         ),
-         child: Column(
-           mainAxisAlignment: MainAxisAlignment.center,
-           children: [
-             Text("Register", style: TextStyle(color:Colors.green,fontSize: 20,fontWeight: FontWeight.bold),),
-             SizedBox(height: 20,),
-             TextField(
-               textInputAction: TextInputAction.next,
-               maxLength: 20,
-               decoration: InputDecoration(
-                 border: OutlineInputBorder(borderRadius: BorderRadius.circular(30)),
-                 prefixIcon: Icon(Icons.person),
-                 labelText: "Name",
-                 counterText: "",
-                 labelStyle: TextStyle(fontSize: 18),
-                 floatingLabelBehavior: FloatingLabelBehavior.auto,
-               ),
-               keyboardType: TextInputType.name,
-             ),
-             SizedBox(height: 20,),
-             TextField(
-               textInputAction: TextInputAction.next,
-               maxLength: 10,
-               decoration: InputDecoration(
-                 border: OutlineInputBorder(borderRadius: BorderRadius.circular(30)),
-                 prefixIcon: Icon(Icons.call),
-                 prefixText: "+91",
-                 labelText: "Mobile No.",
-                 counterText: "",
-                 labelStyle: TextStyle(fontSize: 18),
-                 floatingLabelBehavior: FloatingLabelBehavior.auto,
-               ),
-               keyboardType: TextInputType.number,
-             ),
-             SizedBox(height: 20,),
-             TextField(
-               maxLength: 8,
-               textInputAction: TextInputAction.done,
-               obscureText: !this._visible,
-               decoration: InputDecoration(
-                 border: OutlineInputBorder(borderRadius: BorderRadius.circular(30)),
-                 prefixIcon: Icon(Icons.lock),labelText: "Password",
-                 labelStyle: TextStyle(fontSize: 18),
-                 counterText: "",
-                 suffixIcon: IconButton(icon:this._visible ? Icon(Icons.visibility_off): Icon(Icons.visibility),
-                   color: this._visible ? Colors.red : Colors.green,
-                   onPressed: (){
-                     setState(() {
-                       this._visible = !this._visible;
-                     });
-                   },),
-               ),
-               maxLengthEnforced: true,
-             ),
-             SizedBox(height: 20,),
-             RaisedButton(onPressed:(){},
-               color: Colors.green,
-               padding: EdgeInsets.symmetric(horizontal: 60),
-               child: Text("Register", style: TextStyle(fontSize: 20,color: Colors.white),),
-               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-
-             ),
-           ],
-         ),
-       ),
-     ),
-   );
- }
- Widget _buildRegisterhere(){
-   return Visibility(
-     visible: _regvisible,
-     child: Container(
-       color: Colors.white,
-       child: Row(
-         mainAxisAlignment: MainAxisAlignment.center,
-         children: [
-           Text("New User ?"),
-           TextButton(onPressed: (){
+           ),
+           SizedBox(height: 40),
+           RaisedButton(onPressed:(){
              setState(() {
-               _regvisible=false;
+               user.setPhone(int.parse(_inputController.text));
+               if(_formKey.currentState.validate())
+               {
+                 Navigator.push(context, MaterialPageRoute(
+                     builder: (context) => OtpAuth(user)));
+               }
              });
-           }, child: Text("Register Here"))
-         ],
-       ),
-     ),
-   );
- }
- Widget _buildLoginhere(){
-   return Visibility(
-     visible: !_regvisible,
-     child: Container(
-       color: Colors.white,
-       child: Row(
-         mainAxisAlignment: MainAxisAlignment.center,
-         children: [
-           Text("Existing User ?"),
-           TextButton(onPressed: (){
-             setState(() {
-               _regvisible=true;
-             });
-           }, child: Text("Login Here"))
+             },
+             color: Colors.green,
+             padding: EdgeInsets.symmetric(horizontal: 60),
+             child: Text("Get Started", style: TextStyle(fontSize: 20,color: Colors.white),),
+             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+
+           ),
          ],
        ),
      ),
@@ -208,7 +93,17 @@ class _LoginScreenState extends State<LoginScreen> {
                 body: Stack(
                   children:[
                     Container(
-                      color: Colors.green,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [
+                            Colors.green[300],
+                            Colors.green[700],
+                          ],
+
+                        )
+                      ),
                     ),
                     Positioned(
                         top: 30,
@@ -216,12 +111,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: _buildHeading()),
                     Align(
                       alignment: Alignment(0,0),
-                        child: _regvisible ? _buildLoginform() : _buildRegisterform()
-                    ),
-                    Positioned(
-                        bottom: 0,
-                        width: MediaQuery.of(context).size.width,
-                        child: _regvisible ? _buildRegisterhere() : _buildLoginhere()
+                        child:_buildLoginform()
                     ),
                   ]
                 ),
