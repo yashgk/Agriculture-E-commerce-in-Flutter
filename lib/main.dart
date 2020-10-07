@@ -8,7 +8,7 @@ void main() {
     home: LoginScreen(),
     theme: ThemeData(
       primarySwatch:Colors.green,
-      accentColor: Colors.white
+      accentColor: Colors.white,
     )
   )
   );

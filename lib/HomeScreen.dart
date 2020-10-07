@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
-
+import 'Data.dart';
+Data user=new Data();
 class HomeScreen extends StatefulWidget {
+  HomeScreen(Data obj)
+  {
+    user=obj;
+  }
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -34,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         radius: 50,
                       ),
                       SizedBox(height: 20,),
-                      Text("+91 9895335577",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold,color: Colors.white),),
+                      Text("+91"+user.getPhone().toString(),style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold,color: Colors.white),),
                     ],
                   ),
                 ),
