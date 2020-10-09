@@ -1,28 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:miniprojectapp/OtpAuth.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'Data.dart';
 
 class LoginScreen extends StatefulWidget {
-  Data user= new Data();
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final Data user=new Data();
  final _inputController = TextEditingController();
 var _formKey = GlobalKey<FormState>();
-
-Future<bool> authUser() async {
-  FirebaseAuth _auth=FirebaseAuth.instance;
-  _auth.verifyPhoneNumber(
-      phoneNumber: '+91'+user.getPhone().toString(),
-      verificationCompleted: null,
-      verificationFailed: null,
-      codeSent: null,
-      codeAutoRetrievalTimeout: null);
-}
 
  Widget _buildHeading(){
   return Row(
