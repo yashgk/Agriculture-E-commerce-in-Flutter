@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:miniprojectapp/OtpAuth.dart';
-import 'Data.dart';
+import 'package:miniprojectapp/Screens/OtpAuthScreen.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -9,9 +8,9 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final Data user=new Data();
  final _inputController = TextEditingController();
 var _formKey = GlobalKey<FormState>();
+String phone;
 
  Widget _buildHeading(){
   return Row(
@@ -47,9 +46,9 @@ var _formKey = GlobalKey<FormState>();
                textInputAction: TextInputAction.done,
                maxLength: 10,
                maxLengthEnforced: true,
-               validator: (String arg) {
+               validator: (arg) {
                  if(arg.length <10)
-                   return "Please Enter 10 digit number";
+                     return "Please Enter 10 digit number";
                },
                decoration: InputDecoration(
                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(30)),
@@ -66,11 +65,12 @@ var _formKey = GlobalKey<FormState>();
            SizedBox(height: 40),
            RaisedButton(onPressed:(){
              setState(() {
-               user.setPhone(int.parse(_inputController.text));
                if(_formKey.currentState.validate())
                {
+                 phone="+91"+_inputController.text;
+                 print(phone);
                  Navigator.push(context, MaterialPageRoute(
-                     builder: (context) => OtpAuth(user)));
+                     builder: (context) => OtpAuthScreen(phone)));
                }
              });
              },

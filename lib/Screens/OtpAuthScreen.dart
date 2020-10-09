@@ -1,16 +1,68 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:miniprojectapp/Data.dart';
-
-class OtpAuth extends StatefulWidget {
-  OtpAuth(Data user);
+import 'package:miniprojectapp/Screens/HomeScreen.dart';
+import 'package:miniprojectapp/Screens/LoginScreen.dart';
+class OtpAuthScreen extends StatefulWidget {
+  final String _phone;
+  OtpAuthScreen(this._phone,);
   @override
   _OtpScreenState createState() => _OtpScreenState();
 }
 
-class _OtpScreenState extends State<OtpAuth> {
+class _OtpScreenState extends State<OtpAuthScreen> {
+
+  void initState() {
+    super.initState();
+    print("ok1");
+    _userAuth();
+    print("ok2");
+  }
 TextEditingController _otpController=new TextEditingController();
+
+Future<void> _userAuth() async{
+  FirebaseAuth _auth=FirebaseAuth.instance; //Initiate Firebase instance
+
+  _auth.verifyPhoneNumber(
+    timeout: Duration(seconds: 60),
+    phoneNumber: widget._phone,
+
+    verificationCompleted: (AuthCredential credential) async {
+      print("verification complete");
+      UserCredential _userCredential= await _auth.signInWithCredential(credential);
+      User _user=_userCredential.user;
+      if(_user!=null)
+        {
+          Navigator.push(context, MaterialPageRoute(builder: (context)=> HomeScreen(_user)));
+        }
+    },
+    verificationFailed: (FirebaseAuthException e) {
+      print("verification failed");
+      showDialog(context: context,child: Text(e.toString()));
+      Navigator.push(context, MaterialPageRoute(builder: (context)=> LoginScreen()));
+    },
+    codeSent: (String verificationId, int resendToken) async {
+      print("code sent");
+      final code=_otpController.text;
+      AuthCredential _credential= PhoneAuthProvider.credential(verificationId: verificationId, smsCode: code);
+      UserCredential _userCredential=await _auth.signInWithCredential(_credential);
+      User _user=_userCredential.user;
+      if(_user!=null)
+      {
+        Navigator.push(context, MaterialPageRoute(builder: (context)=> HomeScreen(_user)));
+      }
+      else
+        {
+          showDialog(context: context,child: Text("Error"));
+          Navigator.push(context, MaterialPageRoute(builder: (context)=> LoginScreen()));
+        }
+    },
+    codeAutoRetrievalTimeout: (String verificationId) {
+      print("code auto retrieval timeout");
+    },
+  );
+}
 
   Widget _buildTitle(){
     return Container(
@@ -28,7 +80,7 @@ TextEditingController _otpController=new TextEditingController();
       ),
       child: Column(
         children: [
-          Text("Please enter an OTP verification code which is sent to your mobile number +91 9033353762",
+          Text("Please enter an OTP verification code which is sent to your mobile number"+widget._phone,
             textAlign: TextAlign.center,
             style:TextStyle(fontSize: 20,color: Colors.green,fontWeight: FontWeight.bold,),
           ),
@@ -56,18 +108,23 @@ TextEditingController _otpController=new TextEditingController();
   Widget _buildVerify(){
     return Container(
       child: RaisedButton(
-        onPressed: (){},
+        onPressed: (){
+          setState(() {
+
+          });
+        },
         color: Colors.white,
         splashColor: Colors.green,
         padding: EdgeInsets.symmetric(horizontal: 60,vertical: 15),
         child:Text("Submit",style: TextStyle(color: Colors.green,fontSize: 20,fontWeight: FontWeight.bold),),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
       ),
-
     );
   }
+
   @override
   Widget build(BuildContext context) {
+    print("build Complete");
     return SafeArea(
         child:Scaffold(
           resizeToAvoidBottomInset: false,

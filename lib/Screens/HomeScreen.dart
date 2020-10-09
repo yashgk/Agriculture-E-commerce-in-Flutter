@@ -1,11 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'Data.dart';
-Data user=new Data();
 class HomeScreen extends StatefulWidget {
-  HomeScreen(Data obj)
-  {
-    user=obj;
-  }
+final User finaluser;
+HomeScreen(this.finaluser);
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -39,7 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         radius: 50,
                       ),
                       SizedBox(height: 20,),
-                      Text("+91"+user.getPhone().toString(),style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold,color: Colors.white),),
+                      Text(widget.finaluser.phoneNumber,style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold,color: Colors.white),),
                     ],
                   ),
                 ),
