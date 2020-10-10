@@ -69,8 +69,7 @@ String phone;
                {
                  phone="+91"+_inputController.text;
                  print(phone);
-                 Navigator.push(context, MaterialPageRoute(
-                     builder: (context) => OtpAuthScreen(phone)));
+                 Navigator.push(context, MaterialPageRoute(builder: (context)=> OtpAuthScreen(phone)));
                }
              });
              },

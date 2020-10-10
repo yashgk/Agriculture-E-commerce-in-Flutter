@@ -1,5 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:miniprojectapp/Drawer/Profile.dart';
+import 'package:miniprojectapp/Drawer/About.dart';
+import 'package:miniprojectapp/Drawer/Wishlist.dart';
+import 'package:miniprojectapp/Drawer/Settings.dart';
+import 'package:miniprojectapp/Drawer/Order.dart';
+import 'package:miniprojectapp/Services/AuthService.dart';
 class HomeScreen extends StatefulWidget {
 final User finaluser;
 HomeScreen(this.finaluser);
@@ -17,6 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
           centerTitle:true ,
           elevation: 0,
           title: Text("Agrozon"),
+
         ),
         drawer: Container(
           width: 250,
@@ -44,31 +51,31 @@ class _HomeScreenState extends State<HomeScreen> {
                 ListTile(
                   title: Text("Profile"),
                   leading: Icon(Icons.person),
-                  onTap: (){},
+                  onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context)=> Profile(widget.finaluser)));},
                 ),
                 Divider(thickness: 1,height: 3,),
                 ListTile(
                   title: Text("Orders"),
                   leading: Icon(Icons.shopping_bag),
-                  onTap: (){},
+                  onTap: (){ Navigator.push(context, MaterialPageRoute(builder: (context)=> Order()));},
                 ),
                 Divider(thickness: 1,height: 3,),
                 ListTile(
                   title: Text("Wishlist"),
                   leading: Icon(Icons.favorite),
-                  onTap: (){},
+                  onTap: (){ Navigator.push(context, MaterialPageRoute(builder: (context)=> Wishlist()));},
                 ),
                 Divider(thickness: 1,height: 3,),
                 ListTile(
                   title: Text("Settings"),
                   leading: Icon(Icons.settings),
-                  onTap: (){},
+                  onTap: (){ Navigator.push(context, MaterialPageRoute(builder: (context)=> Settings()));},
                 ),
                 Divider(thickness: 1,height: 3,),
                 ListTile(
                   title: Text("About"),
                   leading: Icon(Icons.info),
-                  onTap: (){},
+                  onTap: (){ Navigator.push(context, MaterialPageRoute(builder: (context)=> About()));},
                 ),
                 Divider(thickness: 1,height: 3,),
                 Spacer(),

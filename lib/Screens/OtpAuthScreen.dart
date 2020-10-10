@@ -12,6 +12,7 @@ class OtpAuthScreen extends StatefulWidget {
 }
 
 class _OtpScreenState extends State<OtpAuthScreen> {
+  TextEditingController _otpController=new TextEditingController();
 
   void initState() {
     super.initState();
@@ -19,50 +20,65 @@ class _OtpScreenState extends State<OtpAuthScreen> {
     _userAuth();
     print("ok2");
   }
-TextEditingController _otpController=new TextEditingController();
 
-Future<void> _userAuth() async{
-  FirebaseAuth _auth=FirebaseAuth.instance; //Initiate Firebase instance
+void codeSENT(String id,int token){}
+  Future<void> _userAuth() async{
+    FirebaseAuth _auth=FirebaseAuth.instance; //Initiate Firebase instance
 
-  _auth.verifyPhoneNumber(
-    timeout: Duration(seconds: 60),
-    phoneNumber: widget._phone,
+    _auth.verifyPhoneNumber(
+        timeout: Duration(seconds: 60),
+        phoneNumber: widget._phone,
 
-    verificationCompleted: (AuthCredential credential) async {
-      print("verification complete");
-      UserCredential _userCredential= await _auth.signInWithCredential(credential);
-      User _user=_userCredential.user;
-      if(_user!=null)
-        {
-          Navigator.push(context, MaterialPageRoute(builder: (context)=> HomeScreen(_user)));
-        }
-    },
-    verificationFailed: (FirebaseAuthException e) {
-      print("verification failed");
-      showDialog(context: context,child: Text(e.toString()));
-      Navigator.push(context, MaterialPageRoute(builder: (context)=> LoginScreen()));
-    },
-    codeSent: (String verificationId, int resendToken) async {
-      print("code sent");
-      final code=_otpController.text;
-      AuthCredential _credential= PhoneAuthProvider.credential(verificationId: verificationId, smsCode: code);
-      UserCredential _userCredential=await _auth.signInWithCredential(_credential);
-      User _user=_userCredential.user;
-      if(_user!=null)
-      {
-        Navigator.push(context, MaterialPageRoute(builder: (context)=> HomeScreen(_user)));
-      }
-      else
-        {
-          showDialog(context: context,child: Text("Error"));
+        verificationCompleted: (AuthCredential credential) async {
+          print("verification complete");
+          UserCredential _userCredential= await _auth.signInWithCredential(credential);
+          User _user=_userCredential.user;
+          if(_user!=null)
+          {
+            Navigator.push(context, MaterialPageRoute(builder: (context)=> HomeScreen(_user)));
+          }
+        },
+        verificationFailed: (FirebaseAuthException e) {
+          print("verification failed");
+          showDialog(context: context,child: Text(e.toString()));
           Navigator.push(context, MaterialPageRoute(builder: (context)=> LoginScreen()));
+        },
+      codeSent:
+            (String verificationId, int resendToken) async {
+          print("code sent");
+          // Navigator.push(context, MaterialPageRoute(builder: (context)=> OtpAuthScreen(phone)));
+          // final code=_otpController.text;
+          // AuthCredential _credential= PhoneAuthProvider.credential(verificationId: verificationId, smsCode: code);
+          // UserCredential _userCredential=await _auth.signInWithCredential(_credential);
+          // User _user=_userCredential.user;
+          // if(_user!=null)
+          // {
+          //   Navigator.push(context, MaterialPageRoute(builder: (context)=> HomeScreen(_user)));
+          // }
+          // else
+          //   {
+          //     showDialog(context: context,child: Text("Error"));
+          //     Navigator.push(context, MaterialPageRoute(builder: (context)=> LoginScreen()));
+          //   }
+        },
+        codeAutoRetrievalTimeout: (String verificationId) async{
+          print("code auto retrieval timeout");
+          final code=_otpController.text;
+          AuthCredential _credential= PhoneAuthProvider.credential(verificationId: verificationId, smsCode: code);
+          UserCredential _userCredential=await _auth.signInWithCredential(_credential);
+          User _user=_userCredential.user;
+          if(_user!=null)
+          {
+            Navigator.push(context, MaterialPageRoute(builder: (context)=> HomeScreen(_user)));
+          }
+          else
+          {
+            showDialog(context: context,child: Text("Error"));
+            Navigator.push(context, MaterialPageRoute(builder: (context)=> LoginScreen()));
+          }
         }
-    },
-    codeAutoRetrievalTimeout: (String verificationId) {
-      print("code auto retrieval timeout");
-    },
-  );
-}
+    );
+  }
 
   Widget _buildTitle(){
     return Container(
@@ -88,16 +104,16 @@ Future<void> _userAuth() async{
           TextField(
             controller:_otpController ,
             textInputAction: TextInputAction.done,
-            maxLength: 4,
-            style: TextStyle(fontSize: 20,letterSpacing: 50,color: Colors.green,fontWeight: FontWeight.bold),
+            maxLength: 6,
+            style: TextStyle(fontSize: 20,letterSpacing: 35,color: Colors.green,fontWeight: FontWeight.bold),
             maxLengthEnforced: true,
             showCursor: false,
             textAlign: TextAlign.center,
             decoration: InputDecoration(
               border: OutlineInputBorder(borderRadius: BorderRadius.circular(30)),
               counterText: "",
-              hintText: "----",
-              hintStyle: TextStyle(fontSize: 20,letterSpacing: 50,color: Colors.green,fontWeight: FontWeight.bold),
+              hintText: "------",
+              hintStyle: TextStyle(fontSize: 20,letterSpacing: 35,color: Colors.green,fontWeight: FontWeight.bold),
             ),
             keyboardType: TextInputType.number,
           ),
